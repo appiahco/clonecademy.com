@@ -25,7 +25,7 @@ const {
 } = Astro.props;
 const fullTitle = title
 	? `${title} | ${site.name}`
-	: `${site.name}: learn to build your startup by cloning one`;
+	: `${site.name}: the coding bootcamp for founders`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const imageUrl = new URL(image, Astro.site);
 ---

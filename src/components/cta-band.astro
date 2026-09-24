@@ -8,7 +8,7 @@ interface Props {
 }
 const {
 	title = `Applications for Cohort ${nextCohort.number} close ${formatDate(nextCohort.applicationsClose)}.`,
-	body = `The cohort starts ${formatDate(nextCohort.starts)}, with ${nextCohort.seatsPerRole} seats in each role. Applying takes about ten minutes.`,
+	body = `Cohort ${nextCohort.number} starts ${formatDate(nextCohort.starts)}, and each role has only ${nextCohort.seatsPerRole} seats. Applying takes ten minutes, and there's no coding test.`,
 } = Astro.props;
 ---
 

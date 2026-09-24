@@ -4,7 +4,7 @@ export const site = {
 	name: "Clonecademy",
 	url: "https://clonecademy.com",
 	description:
-		"A 16-week remote cohort where founders learn frontend, backend, cloud or AI by cloning a real product with a team, then shipping their own.",
+		"The coding bootcamp for founders. In 16 weeks, learn frontend, backend, cloud or AI engineering by shipping an Amazon or Instagram clone with a team, then launch your own product.",
 	// TODO: confirm the legal entity name.
 	company: "Appiah & Co.",
 	founder: "Karthik G. Appiah",
