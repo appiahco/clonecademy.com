@@ -2,7 +2,7 @@
 
 FROM node:22-alpine AS build
 WORKDIR /app
-ENV LEFTHOOK=0
+RUN apk add --no-cache git && git init -q
 RUN corepack enable
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
