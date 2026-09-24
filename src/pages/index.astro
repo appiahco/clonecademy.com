@@ -276,16 +276,14 @@ const [featured, ...moreQuotes] = testimonials;
 				{formatPrice(pricing.perRole.upfront)}
 			</p>
 			<p class="mt-2 text-muted-foreground">
-				per role, or {pricing.perRole.installments.count} monthly payments of
-				{formatPrice(pricing.perRole.installments.amount)}
+				per role, or {pricing.perRole.installments.count} monthly payments of {formatPrice(pricing.perRole.installments.amount)}
 			</p>
 			<ul class="mt-8 space-y-3 text-sm">
 				<li>
 					Teams of four save {pricing.teamDiscountPercent}% on every seat
 				</li>
 				<li>
-					All four roles with the Full-stack founder pass,
-					{formatPrice(pricing.fullStack.upfront)}
+					All four roles with the Full-stack founder pass, {formatPrice(pricing.fullStack.upfront)}
 				</li>
 				<li>Full refund, minus the deposit, in the first {pricing.refundDays} days</li>
 			</ul>
