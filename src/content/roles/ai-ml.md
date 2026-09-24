@@ -28,4 +28,4 @@ outcomes:
 
 AI/ML engineers own the parts of the product that learn. On a cohort team you build generative AI features and AutoML models, serve them from a small Python service, and work with the backend team to put them in front of users.
 
-The job is as much judgement as code: you'll learn to tell a demo from a feature, and to prove it with an evaluation instead of a vibe.
+The job is as much judgment as code: you'll learn to tell a demo from a feature, and to prove it with an evaluation instead of a vibe.

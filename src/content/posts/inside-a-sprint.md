@@ -8,7 +8,7 @@ Sprint two of the Amazon clone has one goal: a buyer can pay a real seller with 
 
 ## Monday: planning
 
-The team starts by agreeing the API contract for checkout. What does the cart look like? What happens if stock runs out between adding to the cart and paying? This conversation takes longer than anyone expects, and it's the most valuable hour of the sprint.
+The team starts by agreeing on the API contract for checkout. What does the cart look like? What happens if stock runs out between adding to the cart and paying? This conversation takes longer than anyone expects, and it's the most valuable hour of the sprint.
 
 ## The backend seat
 

@@ -10,7 +10,7 @@ export const stats = [
 export const alumniProducts = [
 	{
 		name: "Tallyroom",
-		summary: "Room booking and billing for independent co-working spaces.",
+		summary: "Room booking and billing for independent coworking spaces.",
 		cohort: 2,
 		clone: "Amazon",
 		status: "Paying customers in 3 cities",

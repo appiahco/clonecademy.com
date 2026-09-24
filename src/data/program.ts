@@ -42,7 +42,7 @@ export const week = [
 	{
 		title: "Code review",
 		detail:
-			"Every pull request is reviewed by an engineer within one working day, plus peer review from your team.",
+			"Every pull request is reviewed by an engineer within one business day, plus peer review from your team.",
 	},
 	{
 		title: "Office hours",
@@ -55,11 +55,11 @@ export const teamOptions = [
 	{
 		title: "Get matched",
 		detail:
-			"Enrol in one role and we'll place you on a team with one founder from each of the other three roles, matched by time zone and the kind of company you want to build.",
+			"Enroll in one role and we'll place you on a team with one founder from each of the other three roles, matched by time zone and the kind of company you want to build.",
 	},
 	{
 		title: "Bring your team",
 		detail:
-			"Enrol with your cofounders, one per role, and learn together as a team. Teams of four get a discount on every seat.",
+			"Enroll with your cofounders, one per role, and learn together as a team. Teams of four get a discount on every seat.",
 	},
 ];
