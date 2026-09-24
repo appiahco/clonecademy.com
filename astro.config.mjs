@@ -25,8 +25,8 @@ export default defineConfig({
 		},
 		{
 			provider: fontProviders.google(),
-			name: "Geist",
-			cssVariable: "--font-geist",
+			name: "Instrument Sans",
+			cssVariable: "--font-instrument",
 			weights: ["400 700"],
 			styles: ["normal"],
 			subsets: ["latin"],

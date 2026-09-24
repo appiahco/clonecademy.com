@@ -12,13 +12,13 @@ The other option is to build your own idea straight away. Founders love this, an
 
 A clone fixes both problems. Amazon and Instagram are big enough to need every part of a modern stack, from mobile apps to payments to machine learning. And everyone on your team already knows how they should behave.
 
-When your cart forgets an item, nobody argues about whether that's a feature. You open Amazon, see what it does, and go back to fixing your code. The product decisions are made for you, so all your attention goes on engineering.
+When your cart forgets an item, nobody argues about whether that's a feature. You open Amazon, see what it does, and go back to fixing your code. The product decisions are made for you, so all your attention goes to engineering.
 
 ## Why a team
 
 A clone of Amazon is too big for one person in nine weeks, and that's deliberate. Each of the four roles owns one part and depends on the others. Frontend waits on an API. The API waits on a schema. Everything waits on a deploy.
 
-Learning to hand work to each other, to agree an API contract and review each other's pull requests, is what makes this feel like a startup instead of a course.
+Learning to hand work to each other, to agree on an API contract and review each other's pull requests, is what makes this feel like a startup instead of a course.
 
 ## Then your own
 

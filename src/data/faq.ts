@@ -39,7 +39,7 @@ export const faq = [
 			{
 				question: "How are teams formed?",
 				answer:
-					"By default we match you with one founder from each of the other roles, by time zone and the kind of company you're building. You can also enrol with your own cofounders as a team.",
+					"By default we match you with one founder from each of the other roles, by time zone and the kind of company you're building. You can also enroll with your own cofounders as a team.",
 			},
 			{
 				question: "What if a teammate drops out?",

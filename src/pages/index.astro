@@ -33,7 +33,7 @@ const facts = [
 	{ term: "Next cohort", detail: `Starts ${formatDate(nextCohort.starts)}` },
 	{ term: "Length", detail: `${cohort.weeks} weeks, fully remote` },
 	{ term: "Time", detail: `About ${cohort.hoursPerWeek} hours a week` },
-	{ term: "Experience", detail: "None needed" },
+	{ term: "Experience", detail: "No coding needed" },
 ];
 const faqPreview = faq.flatMap((group) => group.items).slice(0, 4);
 const [featured, ...moreQuotes] = testimonials;
@@ -52,12 +52,13 @@ const [featured, ...moreQuotes] = testimonials;
 		>
 			<div class="lg:col-span-6">
 				<h1 class="display text-[3.25rem] sm:text-7xl xl:text-[5.5rem]">
-					Clone Amazon with a team. Then build your company.
+					<span class="block"><span class="text-ink">Don't outsource</span> your product.</span>
+					<span class="block"><span class="text-ink">Build it</span> yourself.</span>
 				</h1>
 				<p class="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-					A {cohort.weeks}-week remote cohort where founders learn frontend,
-					backend, cloud or AI engineering by shipping a real product
-					together.
+					Spend {cohort.weeks} weeks on a four-founder startup team. You'll
+					work in sprints with code review to clone a production-grade app,
+					then ship your own startup.
 				</p>
 				<div class="mt-9 flex flex-wrap gap-3">
 					<Button href={site.applyHref} size="xl">
@@ -87,8 +88,8 @@ const [featured, ...moreQuotes] = testimonials;
 	<!-- The team -->
 	<section class="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
 		<SectionHeading
-			title="Four roles. One product. One team."
-			intro="You enrol in one role and join a team with one founder from each of the others. Together you build the whole product, the way a real startup engineering team does."
+			title="Four roles. One team. One product."
+			intro="Choose frontend, backend, AI/ML or cloud, and go deep on it. Your three teammates cover the rest, so every layer of the product is built by someone on the team, not handed to an agency."
 		/>
 		<ul class="mt-14 grid border-y border-border sm:grid-cols-2 lg:grid-cols-4">
 			{
@@ -146,8 +147,8 @@ const [featured, ...moreQuotes] = testimonials;
 	<section class="border-y border-border bg-muted/50">
 		<div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
 			<SectionHeading
-				title="Sixteen weeks, from first commit to demo day"
-				intro="Learn your role, clone a product with your team, then use everything you've learned on a startup of your own."
+				title="From your first line of code to demo day"
+				intro="Three weeks to learn your stack. Nine weeks to clone a product with your team. Three weeks to build your own. Then you demo both to founders and investors."
 			/>
 			<div class="mt-14">
 				<Schedule />
@@ -158,8 +159,8 @@ const [featured, ...moreQuotes] = testimonials;
 	<!-- Products -->
 	<section class="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
 		<SectionHeading
-			title="What you'll ship"
-			intro="Each team picks one product to clone. Both need every role, and both end up in production with real users."
+			title="Ship a product millions of people already use"
+			intro="Your team picks Amazon or Instagram and clones it end to end: web, mobile, payments, infrastructure and AI. It goes live in production, and it goes in your portfolio."
 		/>
 		<div class="mt-14 grid gap-6 lg:grid-cols-2">
 			{
@@ -205,17 +206,17 @@ const [featured, ...moreQuotes] = testimonials;
 		<div class="mt-20 grid gap-10 lg:grid-cols-12">
 			<div class="lg:col-span-4">
 				<h3 class="text-2xl font-semibold tracking-tight">
-					Then you build your own
+					Then you build your company
 				</h3>
 				<p class="mt-3 leading-relaxed text-muted-foreground">
-					In weeks 13 to 15, each team points the same stack at one
-					teammate's startup. Some of what alumni teams have launched:
+					In weeks 13 to 15, your team points the same stack, habits and
+					momentum at one teammate's startup. A few that alumni teams launched:
 				</p>
 				<a
 					href="/outcomes"
 					class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium hover:text-primary"
 				>
-					More outcomes
+					See alumni outcomes
 					<ArrowRight class="size-4" aria-hidden="true" />
 				</a>
 			</div>

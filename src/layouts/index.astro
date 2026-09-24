@@ -25,7 +25,7 @@ const {
 } = Astro.props;
 const fullTitle = title
 	? `${title} | ${site.name}`
-	: `${site.name}: learn to build your startup by cloning one`;
+	: `${site.name}: the coding bootcamp for founders`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const imageUrl = new URL(image, Astro.site);
 ---
@@ -66,7 +66,7 @@ const imageUrl = new URL(image, Astro.site);
 		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 		<meta name="theme-color" content="#0f1417" media="(prefers-color-scheme: dark)" />
 		<Font cssVariable="--font-bricolage" preload />
-		<Font cssVariable="--font-geist" preload />
+		<Font cssVariable="--font-instrument" preload />
 		<Font cssVariable="--font-geist-mono" />
 		<slot name="head" />
 		<script is:inline>

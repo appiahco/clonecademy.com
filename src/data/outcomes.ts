@@ -9,31 +9,33 @@ export const stats = [
 
 export const alumniProducts = [
 	{
-		name: "Tallyroom",
-		summary: "Room booking and billing for independent co-working spaces.",
+		name: "Parkbnb",
+		summary:
+			"Airbnb for parking: drivers book spare driveways and garages by the hour.",
 		cohort: 2,
 		clone: "Amazon",
 		status: "Paying customers in 3 cities",
 	},
 	{
-		name: "Fieldnote",
+		name: "SRSly",
 		summary:
-			"Voice notes that turn site visits into structured reports for builders.",
+			"AI-native flashcards on FSRS: it writes your cards and schedules every review.",
 		cohort: 3,
 		clone: "Instagram",
 		status: "Raised a pre-seed round",
 	},
 	{
-		name: "Pantry Loop",
+		name: "Anonymedia",
 		summary:
-			"A marketplace for restaurants to sell surplus stock to each other.",
+			"Social media without accounts. Post, reply and follow with no sign-up.",
 		cohort: 3,
 		clone: "Amazon",
 		status: "Live in beta",
 	},
 	{
-		name: "Kinfolk Circles",
-		summary: "Private photo sharing for extended families, without the feed.",
+		name: "SoloFeed",
+		summary:
+			"One-player social media: a feed with an audience of one, for posting without performing.",
 		cohort: 4,
 		clone: "Instagram",
 		status: "2,000 weekly active users",
