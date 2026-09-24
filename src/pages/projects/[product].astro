@@ -1,0 +1,118 @@
+---
+import { render } from "astro:content";
+import Check from "@phosphor-icons/core/assets/regular/check.svg";
+import type { GetStaticPaths } from "astro";
+import CtaBand from "../../components/cta-band.astro";
+import PageHeader from "../../components/page-header.astro";
+import SectionHeading from "../../components/section-heading.astro";
+import SprintList from "../../components/sprint-list.astro";
+import Teardown from "../../components/teardown.astro";
+import Layout from "../../layouts/index.astro";
+import {
+	getDeliverables,
+	getLayers,
+	getProducts,
+	getRoles,
+} from "../../lib/content";
+import { icons } from "../../lib/icons";
+
+export const getStaticPaths = (async () => {
+	const products = await getProducts();
+	return products.map((product) => ({
+		params: { product: product.id },
+		props: { product },
+	}));
+}) satisfies GetStaticPaths;
+
+const { product } = Astro.props;
+const { Content } = await render(product);
+const layers = await getLayers(product);
+const roles = await getRoles();
+const Icon = icons[product.data.icon];
+---
+
+<Layout
+	title={`${product.data.name} clone`}
+	description={`What a Clonecademy team builds when it clones ${product.data.name}: ${product.data.summary}`}
+>
+	<PageHeader title={`The ${product.data.name} clone`} lede={product.data.summary}>
+		<Fragment slot="before">
+			<div class="mb-6 flex items-center gap-3">
+				<Icon class="size-9" aria-hidden="true" />
+				<span class="font-medium text-ink">{product.data.kind}</span>
+			</div>
+		</Fragment>
+	</PageHeader>
+
+	<section class="mx-auto grid w-full max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 sm:py-24 lg:grid-cols-12 lg:px-8">
+		<div class="lg:col-span-7">
+			<Teardown product={product.data.name} layers={layers} />
+		</div>
+		<div class="lg:col-span-5">
+			<h2 class="text-2xl font-bold tracking-tight">The layers</h2>
+			<dl class="mt-6 divide-y divide-border border-y border-border">
+				{
+					layers.map((layer) => (
+						<div class="py-4">
+							<dt class="flex items-baseline justify-between gap-4">
+								<span class="font-semibold">{layer.name}</span>
+								<a href={`/curriculum/${layer.roleId}`} class="text-sm text-ink hover:underline">
+									{layer.role}
+								</a>
+							</dt>
+							<dd class="mt-1 text-sm text-muted-foreground">{layer.detail}</dd>
+						</div>
+					))
+				}
+			</dl>
+			<div class="typeset mt-8">
+				<Content />
+			</div>
+		</div>
+	</section>
+
+	<section class="border-y border-border bg-muted/50">
+		<div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+			<SectionHeading
+				title="What each role ships"
+				intro="Everything below is in production by week 12, with tests, docs and a teammate's review."
+			/>
+			<div class="mt-12 grid gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-2">
+				{
+					roles.map((role) => {
+						const RoleIcon = icons[role.data.icon];
+						return (
+							<div class="bg-background p-6 sm:p-8">
+								<a href={`/curriculum/${role.id}`} class="flex items-center gap-3 hover:text-primary">
+									<RoleIcon class="size-7 text-ink" aria-hidden="true" />
+									<h3 class="text-xl font-semibold">{role.data.title}</h3>
+								</a>
+								<ul class="mt-5 space-y-3">
+									{getDeliverables(product, role.id).map((item) => (
+										<li class="flex gap-3">
+											<Check class="mt-1 size-4 shrink-0 text-ink" aria-hidden="true" />
+											<span class="leading-relaxed">{item}</span>
+										</li>
+									))}
+								</ul>
+							</div>
+						);
+					})
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+		<div class="grid gap-12 lg:grid-cols-12">
+			<SectionHeading
+				class="lg:col-span-5"
+				title="Sprint plan"
+				intro="Two-week sprints from week 4, each with a goal the whole team has to hit together."
+			/>
+			<SprintList class="lg:col-span-7" sprints={product.data.sprints} />
+		</div>
+	</section>
+
+	<CtaBand />
+</Layout>
