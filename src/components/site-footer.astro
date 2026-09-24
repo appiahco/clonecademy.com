@@ -1,0 +1,86 @@
+---
+import EnvelopeSimple from "@phosphor-icons/core/assets/regular/envelope-simple.svg";
+import GithubLogo from "@phosphor-icons/core/assets/regular/github-logo.svg";
+import LinkedinLogo from "@phosphor-icons/core/assets/regular/linkedin-logo.svg";
+import Rss from "@phosphor-icons/core/assets/regular/rss.svg";
+import XLogo from "@phosphor-icons/core/assets/regular/x-logo.svg";
+import { footerNav, site } from "../data/site";
+import Wordmark from "./wordmark.astro";
+
+const socials = [
+	{ href: site.socials.github, label: "GitHub", Icon: GithubLogo },
+	{ href: site.socials.linkedin, label: "LinkedIn", Icon: LinkedinLogo },
+	{ href: site.socials.x, label: "X", Icon: XLogo },
+	{ href: "/rss.xml", label: "Blog feed", Icon: Rss },
+];
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-auto border-t border-border bg-muted/40">
+	<div
+		class="mx-auto grid max-w-7xl gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1.4fr_2fr] lg:px-8"
+	>
+		<div class="max-w-sm">
+			<a href="/" class="inline-block rounded-md">
+				<Wordmark />
+				<span class="sr-only">{site.name} home</span>
+			</a>
+			<p class="mt-4 text-sm leading-relaxed text-muted-foreground">
+				A remote bootcamp where founders learn software engineering by
+				cloning real products as a team.
+			</p>
+			<a
+				href={`mailto:${site.email}`}
+				class="mt-5 inline-flex items-center gap-2 text-sm font-medium hover:text-primary"
+			>
+				<EnvelopeSimple class="size-4" aria-hidden="true" />
+				{site.email}
+			</a>
+		</div>
+
+		<div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
+			{
+				footerNav.map((group) => (
+					<nav aria-label={group.title}>
+						<h2 class="font-sans text-sm font-semibold">{group.title}</h2>
+						<ul class="mt-4 space-y-3">
+							{group.links.map((link) => (
+								<li>
+									<a
+										href={link.href}
+										class="text-sm text-muted-foreground hover:text-foreground"
+									>
+										{link.label}
+									</a>
+								</li>
+							))}
+						</ul>
+					</nav>
+				))
+			}
+		</div>
+	</div>
+
+	<div class="border-t border-border">
+		<div
+			class="mx-auto flex max-w-7xl flex-col-reverse gap-4 px-4 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8"
+		>
+			<p>&copy; {year} {site.company} All rights reserved.</p>
+			<ul class="flex gap-1">
+				{
+					socials.map(({ href, label, Icon }) => (
+						<li>
+							<a
+								href={href}
+								class="grid size-9 place-items-center rounded-md hover:bg-muted hover:text-foreground"
+							>
+								<Icon class="size-5" aria-hidden="true" />
+								<span class="sr-only">{label}</span>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</div>
+</footer>

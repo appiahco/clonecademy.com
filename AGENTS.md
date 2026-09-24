@@ -6,7 +6,17 @@ This repository is a **template**. `README.md` is written for people who consume
 
 ## Status
 
-Freshly scaffolded Astro web application template. The only source is `src/pages/index.astro`, and `astro.config.mjs` is the default `defineConfig({})`. `TODO.md` is still an empty header. There is no test framework configured.
+The clonecademy.com marketing site, a static Astro build. There is no test framework configured.
+
+- **Content**: roles, cloned products and blog posts are content collections (`src/content.config.ts`); pages are generated from them. Program facts (cohort dates, prices, FAQ, testimonials, outcomes) live in `src/data/`. Change a fact there, never in page markup.
+- **Draft copy**: every unconfirmed value (prices, dates, quotes, alumni, bio, legal text) is marked `TODO`. `grep -rn TODO src` is the pre-launch checklist.
+- **Design**: the "teardown" direction — products drawn as exploded isometric plates (`src/components/teardown.astro`), teal ink on a drafting grid. Motion is one orchestrated moment (the home hero teardown); everything else moves only in response to the visitor.
+- **Share image**: `pnpm og` regenerates `public/og.png` from `scripts/og-image.mjs`; rerun it after changing the headline or palette.
+
+## Gotchas
+
+- Astro drops whitespace that contains a newline between text and an `{expression}`, so `of\n{price}` renders `of$650`. Keep inline text and its expression on one line.
+- The dev server misses Tailwind classes in newly created files; restart `pnpm dev` when a new page's layout looks unstyled. `pnpm build` is unaffected.
 
 ## Commands
 

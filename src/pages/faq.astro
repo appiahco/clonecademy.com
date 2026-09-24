@@ -1,0 +1,58 @@
+---
+import CtaBand from "../components/cta-band.astro";
+import FaqList from "../components/faq-list.astro";
+import PageHeader from "../components/page-header.astro";
+import { faq } from "../data/faq";
+import { site } from "../data/site";
+import Layout from "../layouts/index.astro";
+import { faqPage } from "../lib/structured-data";
+
+const slug = (topic: string) => topic.toLowerCase().replace(/\W+/g, "-");
+---
+
+<Layout
+	jsonLd={faqPage}
+	title="FAQ"
+	description="Answers to common questions about Clonecademy: experience needed, choosing a role, teams, time commitment, pricing and refunds."
+>
+	<PageHeader title="Questions, answered" lede="If yours isn't here, email us and a person will reply within one working day.">
+		<a href={`mailto:${site.email}`} class="mt-6 inline-block font-medium text-ink hover:underline">
+			{site.email}
+		</a>
+	</PageHeader>
+
+	<div class="mx-auto grid w-full max-w-7xl gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-12 lg:px-8">
+		<nav aria-label="Topics" class="lg:col-span-3">
+			<ul class="flex flex-wrap gap-2 lg:sticky lg:top-24 lg:flex-col lg:gap-1">
+				{
+					faq.map((group) => (
+						<li>
+							<a
+								href={`#${slug(group.topic)}`}
+								class="block rounded-md border border-border px-3 py-1.5 text-sm hover:text-primary lg:border-0 lg:px-0"
+							>
+								{group.topic}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+		<div class="space-y-16 lg:col-span-9">
+			{
+				faq.map((group) => (
+					<section aria-labelledby={slug(group.topic)}>
+						<h2 id={slug(group.topic)} class="text-2xl font-bold tracking-tight">
+							{group.topic}
+						</h2>
+						<div class="mt-6">
+							<FaqList items={group.items} />
+						</div>
+					</section>
+				))
+			}
+		</div>
+	</div>
+
+	<CtaBand />
+</Layout>

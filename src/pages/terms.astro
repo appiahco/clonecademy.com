@@ -1,0 +1,67 @@
+---
+import { formatPrice, pricing } from "../data/pricing";
+import { site } from "../data/site";
+import Prose from "../layouts/prose.astro";
+
+// TODO: draft terms. Have them reviewed by a lawyer before launch.
+---
+
+<Prose
+	title="Terms of service"
+	description={`The terms that apply when you use ${site.name} or enrol in a cohort.`}
+	updated={new Date("2026-09-24")}
+>
+	<blockquote>
+		<p>These terms are a draft and are being reviewed before cohort enrolment opens online.</p>
+	</blockquote>
+
+	<p>
+		These terms apply to your use of the {site.name} website and to any cohort
+		you enrol in. {site.name} is operated by {site.company}. By enrolling, you
+		agree to these terms.
+	</p>
+
+	<h2>Enrolment</h2>
+	<p>
+		Your seat is held once we accept your application and receive your {formatPrice(pricing.deposit)} deposit. The rest of the fee is due before
+		the cohort starts, or in instalments if you chose a payment plan.
+	</p>
+
+	<h2>Refunds</h2>
+	<p>
+		If you withdraw within {pricing.refundDays} days of your cohort starting, we
+		refund everything you've paid except the deposit. After that, fees aren't
+		refundable, but you can ask to transfer to a later cohort once.
+	</p>
+
+	<h2>Your work</h2>
+	<p>
+		You and your team own the code you write. Work on your own startup in weeks
+		13 to 15 belongs to that startup. You give us permission to show your
+		cloned product at demo day and, with your agreement, in our marketing.
+	</p>
+
+	<h2>Conduct</h2>
+	<p>
+		Cohorts only work when teammates can rely on each other. We may remove
+		anyone who harasses others, shares other students' work without permission
+		or repeatedly misses their team's commitments, after a warning.
+	</p>
+
+	<h2>Our materials</h2>
+	<p>
+		Course materials and recordings are for your personal use while you're a
+		student and as alumni. Please don't resell or republish them.
+	</p>
+
+	<h2>Liability</h2>
+	<p>
+		We teach engineering skills; we don't guarantee any business outcome. Our
+		total liability to you is limited to the fees you've paid us.
+	</p>
+
+	<h2>Contact</h2>
+	<p>
+		Questions about these terms: <a href={`mailto:${site.email}`}>{site.email}</a>.
+	</p>
+</Prose>

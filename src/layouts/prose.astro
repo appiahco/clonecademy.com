@@ -1,0 +1,25 @@
+---
+import PageHeader from "../components/page-header.astro";
+import { formatDate } from "../data/site";
+import Layout from "./index.astro";
+
+interface Props {
+	title: string;
+	description: string;
+	updated: Date;
+}
+const { title, description, updated } = Astro.props;
+---
+
+<Layout title={title} description={description}>
+	<PageHeader title={title}>
+		<p class="mt-6 text-sm text-muted-foreground">
+			Last updated <time datetime={updated.toISOString()}>{formatDate(updated)}</time>
+		</p>
+	</PageHeader>
+	<div class="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6 sm:py-20">
+		<div class="typeset">
+			<slot />
+		</div>
+	</div>
+</Layout>

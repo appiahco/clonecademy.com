@@ -1,0 +1,77 @@
+---
+import CtaBand from "../components/cta-band.astro";
+import PageHeader from "../components/page-header.astro";
+import SectionHeading from "../components/section-heading.astro";
+import { alumniProducts, stats } from "../data/outcomes";
+import { testimonials } from "../data/testimonials";
+import Layout from "../layouts/index.astro";
+---
+
+<Layout
+	title="Outcomes"
+	description="What Clonecademy alumni have shipped: startups launched, MVPs built by demo day and what founders say about the program."
+>
+	<PageHeader
+		title="We measure companies, not job offers"
+		lede="Clonecademy is for founders, so the results that matter are products in front of customers. Here's what alumni teams have shipped so far."
+	/>
+
+	<section class="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+		<dl class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+			{
+				stats.map((stat) => (
+					<div class="flex flex-col border-t-2 border-ink pt-5">
+						<dt class="order-2 mt-2 text-muted-foreground">{stat.label}</dt>
+						<dd class="display order-1 text-6xl">{stat.value}</dd>
+					</div>
+				))
+			}
+		</dl>
+		<p class="mt-10 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+			Across cohorts 1 to 4. A startup counts as launched when it has a
+			production app with at least one paying customer or 100 active users.
+			An MVP counts as shipped when it is live in production on demo day.
+		</p>
+	</section>
+
+	<section class="border-y border-border bg-muted/50">
+		<div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+			<SectionHeading title="Alumni startups" />
+			<ul class="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
+				{
+					alumniProducts.map((item) => (
+						<li class="border-t border-border pt-6">
+							<h3 class="text-xl font-semibold">{item.name}</h3>
+							<p class="mt-2 leading-relaxed text-muted-foreground">{item.summary}</p>
+							<p class="mt-3 text-sm">
+								Cohort {item.cohort}, after cloning {item.clone}.
+								<span class="text-ink"> {item.status}.</span>
+							</p>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<section class="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+		<SectionHeading title="In their words" />
+		<div class="mt-12 grid gap-x-12 gap-y-14 md:grid-cols-2">
+			{
+				testimonials.map((item) => (
+					<figure>
+						<blockquote class="font-heading text-2xl leading-snug font-medium tracking-[-0.015em]">
+							<p>&ldquo;{item.quote}&rdquo;</p>
+						</blockquote>
+						<figcaption class="mt-5 text-sm">
+							<span class="font-semibold">{item.name}</span>
+							<span class="block text-muted-foreground">{item.detail}</span>
+						</figcaption>
+					</figure>
+				))
+			}
+		</div>
+	</section>
+
+	<CtaBand />
+</Layout>

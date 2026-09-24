@@ -1,0 +1,81 @@
+---
+import EnvelopeSimple from "@phosphor-icons/core/assets/regular/envelope-simple.svg";
+import Button from "../components/button.astro";
+import PageHeader from "../components/page-header.astro";
+import { formatDate, nextCohort, site } from "../data/site";
+import Layout from "../layouts/index.astro";
+import { getRoles } from "../lib/content";
+
+// TODO: replace the email flow with the application form once the cohort
+// backend exists. Every "Apply" button on the site points at this page.
+const roles = await getRoles();
+const subject = encodeURIComponent(`Cohort ${nextCohort.number} application`);
+const body = encodeURIComponent(
+	[
+		"Name:",
+		`Role (${roles.map((r) => r.data.short).join(", ")}):`,
+		"Applying alone or with a team:",
+		"Time zone:",
+		"What you're building, or want to build:",
+	].join("\n\n"),
+);
+
+const steps = [
+	{
+		title: "Tell us about you",
+		detail:
+			"Your name, the role you want, your time zone and what you're building. It takes about ten minutes.",
+	},
+	{
+		title: "A 20-minute call",
+		detail:
+			"We talk about your company and the role that fits it best. There's no coding test.",
+	},
+	{
+		title: "Hold your seat",
+		detail:
+			"You'll hear back within five working days. Pay the deposit to hold your seat, and we'll send the pre-work.",
+	},
+];
+---
+
+<Layout
+	title="Apply"
+	description={`Apply for Cohort ${nextCohort.number} of Clonecademy. Applications close ${formatDate(nextCohort.applicationsClose)}.`}
+>
+	<PageHeader
+		title={`Apply for Cohort ${nextCohort.number}`}
+		lede={`The cohort starts ${formatDate(nextCohort.starts)}. Applications close ${formatDate(nextCohort.applicationsClose)}, or earlier if a role fills its ${nextCohort.seatsPerRole} seats.`}
+	/>
+
+	<section class="mx-auto grid w-full max-w-7xl gap-14 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-12 lg:px-8">
+		<ol class="space-y-10 lg:col-span-6">
+			{
+				steps.map((step, index) => (
+					<li class="grid grid-cols-[2.5rem_1fr] gap-4">
+						<span class="grid size-10 place-items-center rounded-full border border-ink font-heading font-semibold text-ink">
+							{index + 1}
+						</span>
+						<div>
+							<h2 class="text-xl font-semibold">{step.title}</h2>
+							<p class="mt-2 max-w-md leading-relaxed text-muted-foreground">{step.detail}</p>
+						</div>
+					</li>
+				))
+			}
+		</ol>
+
+		<div class="rounded-2xl border border-border bg-muted/50 p-8 sm:p-10 lg:col-span-5 lg:col-start-8">
+			<h2 class="text-2xl font-bold tracking-tight">Apply by email</h2>
+			<p class="mt-3 leading-relaxed text-muted-foreground">
+				Our online application opens soon. Until then, email us with the
+				details below and we'll reply within one working day.
+			</p>
+			<Button href={`mailto:${site.email}?subject=${subject}&body=${body}`} size="xl" class="mt-8 w-full">
+				<EnvelopeSimple aria-hidden="true" data-icon="inline-start" />
+				Email your application
+			</Button>
+			<p class="mt-4 text-center text-sm text-muted-foreground">{site.email}</p>
+		</div>
+	</section>
+</Layout>

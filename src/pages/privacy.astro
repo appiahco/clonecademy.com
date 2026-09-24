@@ -1,0 +1,64 @@
+---
+import { site } from "../data/site";
+import Prose from "../layouts/prose.astro";
+
+// TODO: draft policy. Have it reviewed by a lawyer before launch.
+---
+
+<Prose
+	title="Privacy policy"
+	description={`How ${site.name} collects, uses and protects your personal data.`}
+	updated={new Date("2026-09-24")}
+>
+	<blockquote>
+		<p>This policy is a draft and is being reviewed before cohort enrolment opens online.</p>
+	</blockquote>
+
+	<p>
+		{site.name} is operated by {site.company} ("we", "us"). This policy explains
+		what personal data we collect when you visit {site.url.replace("https://", "")} or join a cohort, why we collect it and what rights you have.
+	</p>
+
+	<h2>What we collect</h2>
+	<ul>
+		<li><strong>Application details</strong>: your name, email address, time zone, chosen role and anything you tell us about your company.</li>
+		<li><strong>Enrolment and payment records</strong>: which cohort and plan you're on. Card payments are processed by our payment provider; we never see or store full card numbers.</li>
+		<li><strong>Program activity</strong>: your code, pull requests, messages and session recordings created during a cohort.</li>
+		<li><strong>Website data</strong>: basic server logs. We don't use advertising or tracking cookies.</li>
+	</ul>
+
+	<h2>How we use it</h2>
+	<ul>
+		<li>To review your application and match you with a team.</li>
+		<li>To run the cohort: classes, code review, recordings and demo day.</li>
+		<li>To take payments and keep the records the law requires.</li>
+		<li>To email you about your cohort and, if you agree, future cohorts. You can unsubscribe at any time.</li>
+	</ul>
+
+	<h2>Who we share it with</h2>
+	<p>
+		Your team and instructors see your program activity. We use service
+		providers for hosting, email, video and payments, who process data only on
+		our instructions. We never sell personal data.
+	</p>
+
+	<h2>How long we keep it</h2>
+	<p>
+		We keep application data for 12 months if you don't enrol, and enrolment
+		and payment records for as long as the law requires. Recordings stay
+		available to alumni for the life of the program.
+	</p>
+
+	<h2>Your rights</h2>
+	<p>
+		You can ask to see, correct, export or delete your personal data, or object
+		to how we use it. Email <a href={`mailto:${site.email}`}>{site.email}</a> and
+		we'll respond within 30 days.
+	</p>
+
+	<h2>Changes</h2>
+	<p>
+		If we change this policy in a way that affects you, we'll email you before
+		the change takes effect.
+	</p>
+</Prose>

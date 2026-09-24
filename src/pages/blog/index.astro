@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+import PageHeader from "../../components/page-header.astro";
+import { formatDate } from "../../data/site";
+import Layout from "../../layouts/index.astro";
+
+const posts = (await getCollection("posts", ({ data }) => !data.draft)).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<Layout
+	title="Blog"
+	description="Notes on teaching founders software engineering, from the Clonecademy team."
+>
+	<PageHeader
+		title="Blog"
+		lede="Notes on teaching founders to build software, and what we learn from every cohort."
+	/>
+
+	<section class="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+		<ol class="divide-y divide-border border-y border-border">
+			{
+				posts.map((post) => (
+					<li>
+						<a href={`/blog/${post.id}`} class="group block py-8">
+							<time datetime={post.data.pubDate.toISOString()} class="text-sm text-muted-foreground">
+								{formatDate(post.data.pubDate)}
+							</time>
+							<h2 class="mt-2 text-2xl font-bold tracking-tight group-hover:text-primary sm:text-3xl">
+								{post.data.title}
+							</h2>
+							<p class="mt-3 max-w-2xl leading-relaxed text-muted-foreground">
+								{post.data.description}
+							</p>
+						</a>
+					</li>
+				))
+			}
+		</ol>
+	</section>
+</Layout>

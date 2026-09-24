@@ -1,0 +1,345 @@
+---
+// An exploded isometric drawing of a product: one plate per layer, each with
+// a callout naming the layer and the role that builds it. With `animate`,
+// the plates start stacked and pull apart once on load.
+
+interface Layer {
+	name: string;
+	role: string;
+	art: "storefront" | "feed" | "api" | "data" | "infra" | "model";
+	detail: string;
+}
+
+interface Props {
+	product: string;
+	layers: Layer[];
+	animate?: boolean;
+	/** List the layers under the drawing on small screens. */
+	legend?: boolean;
+	class?: string;
+}
+
+const {
+	product,
+	layers,
+	animate = false,
+	legend = true,
+	class: className,
+} = Astro.props;
+
+// Plate geometry, in viewBox units. Plates are 2:1 isometric squares.
+const cx = 250;
+const halfW = 200;
+const halfH = 100;
+const thickness = 9;
+const gap = 94;
+const top = 128;
+const labelX = 492;
+
+const plates = layers.map((layer, index) => {
+	const cy = top + index * gap;
+	return {
+		...layer,
+		cy,
+		// Maps a flat 200×200 square onto the plate's top face.
+		matrix: `matrix(1 0.5 -1 0.5 ${cx} ${cy - halfH})`,
+		left: `${cx - halfW},${cy} ${cx},${cy + halfH} ${cx},${cy + halfH + thickness} ${cx - halfW},${cy + thickness}`,
+		right: `${cx},${cy + halfH} ${cx + halfW},${cy} ${cx + halfW},${cy + thickness} ${cx},${cy + halfH + thickness}`,
+		// How far the plate travels to reach the collapsed stack.
+		collapse: ((layers.length - 1) / 2 - index) * (gap - 16),
+	};
+});
+
+// Lower plates are drawn first so the plates above sit in front of them.
+const drawOrder = [...plates].reverse();
+
+const height = top + (layers.length - 1) * gap + halfH + thickness + 24;
+const titleId = `teardown-${product.toLowerCase().replace(/\W+/g, "-")}`;
+---
+
+<figure
+	class:list={["teardown", className]}
+	data-teardown
+	data-animate={animate ? "" : undefined}
+>
+	<div class="overflow-hidden sm:overflow-visible">
+	<svg
+		viewBox={`0 0 720 ${height}`}
+		class="block h-auto w-[153%] max-w-none overflow-visible sm:w-full"
+		role="img"
+		aria-labelledby={titleId}
+	>
+		<title id={titleId}>
+			{`Exploded diagram of the ${product} clone: ${layers.map((l) => `${l.name}, built by ${l.role}`).join("; ")}.`}
+		</title>
+		{
+			drawOrder.map((plate) => (
+				<g class="tl-layer" data-collapse={plate.collapse}>
+					<polygon points={plate.left} class="tl-side" />
+					<polygon points={plate.right} class="tl-side tl-side-right" />
+					<g transform={plate.matrix}>
+						<rect width="200" height="200" class="tl-top" />
+						<g class="tl-art">
+							{plate.art === "storefront" && (
+								<>
+									<rect x="16" y="16" width="120" height="168" rx="6" />
+									<line x1="16" y1="34" x2="136" y2="34" />
+									<rect x="28" y="44" width="96" height="10" rx="5" />
+									<rect x="28" y="64" width="44" height="34" rx="3" />
+									<rect x="80" y="64" width="44" height="34" rx="3" />
+									<rect x="28" y="106" width="44" height="34" rx="3" />
+									<rect x="80" y="106" width="44" height="34" rx="3" />
+									<rect x="28" y="148" width="44" height="24" rx="3" />
+									<rect x="80" y="148" width="44" height="24" rx="3" />
+									<rect x="148" y="56" width="38" height="80" rx="7" />
+									<rect x="155" y="68" width="24" height="20" rx="2" />
+									<line x1="155" y1="98" x2="179" y2="98" />
+									<line x1="155" y1="106" x2="172" y2="106" />
+									<circle cx="167" cy="124" r="4" />
+								</>
+							)}
+							{plate.art === "feed" && (
+								<>
+									<rect x="52" y="12" width="84" height="176" rx="12" />
+									<line x1="52" y1="32" x2="136" y2="32" />
+									<circle cx="66" cy="44" r="5" />
+									<line x1="76" y1="44" x2="110" y2="44" />
+									<rect x="60" y="54" width="68" height="56" rx="3" />
+									<line x1="60" y1="120" x2="100" y2="120" />
+									<circle cx="66" cy="136" r="5" />
+									<rect x="60" y="146" width="68" height="22" rx="3" />
+									<line x1="52" y1="176" x2="136" y2="176" />
+									<rect x="148" y="46" width="40" height="60" rx="4" />
+									<rect x="154" y="56" width="28" height="22" rx="2" />
+									<line x1="154" y1="88" x2="178" y2="88" />
+									<line x1="14" y1="70" x2="40" y2="70" />
+									<circle cx="27" cy="92" r="11" />
+								</>
+							)}
+							{plate.art === "api" && (
+								<>
+									<rect x="16" y="24" width="62" height="22" rx="4" />
+									<rect x="16" y="64" width="62" height="22" rx="4" />
+									<rect x="16" y="104" width="62" height="22" rx="4" />
+									<rect x="16" y="144" width="62" height="22" rx="4" />
+									<line x1="78" y1="35" x2="112" y2="92" />
+									<line x1="78" y1="75" x2="110" y2="96" />
+									<line x1="78" y1="115" x2="110" y2="104" />
+									<line x1="78" y1="155" x2="112" y2="108" />
+									<circle cx="128" cy="100" r="18" />
+									<line x1="146" y1="100" x2="160" y2="100" />
+									<rect x="160" y="84" width="28" height="32" rx="4" />
+									<line x1="24" y1="35" x2="44" y2="35" />
+									<line x1="24" y1="75" x2="50" y2="75" />
+									<line x1="24" y1="115" x2="40" y2="115" />
+									<line x1="24" y1="155" x2="46" y2="155" />
+								</>
+							)}
+							{plate.art === "data" && (
+								<>
+									<rect x="16" y="18" width="72" height="72" rx="4" />
+									<line x1="16" y1="34" x2="88" y2="34" />
+									<line x1="16" y1="52" x2="88" y2="52" />
+									<line x1="16" y1="70" x2="88" y2="70" />
+									<rect x="112" y="18" width="72" height="54" rx="4" />
+									<line x1="112" y1="34" x2="184" y2="34" />
+									<line x1="112" y1="52" x2="184" y2="52" />
+									<rect x="16" y="112" width="72" height="72" rx="4" />
+									<line x1="16" y1="128" x2="88" y2="128" />
+									<line x1="16" y1="146" x2="88" y2="146" />
+									<line x1="16" y1="164" x2="88" y2="164" />
+									<line x1="88" y1="44" x2="112" y2="44" />
+									<line x1="52" y1="90" x2="52" y2="112" />
+									<rect x="112" y="118" width="72" height="46" rx="6" />
+									<line x1="112" y1="132" x2="184" y2="132" />
+									<line x1="122" y1="150" x2="146" y2="150" />
+								</>
+							)}
+							{plate.art === "model" && (
+								<>
+									<line x1="36" y1="50" x2="100" y2="36" />
+									<line x1="36" y1="50" x2="100" y2="80" />
+									<line x1="36" y1="100" x2="100" y2="80" />
+									<line x1="36" y1="100" x2="100" y2="124" />
+									<line x1="36" y1="150" x2="100" y2="124" />
+									<line x1="36" y1="150" x2="100" y2="166" />
+									<line x1="36" y1="50" x2="100" y2="124" />
+									<line x1="36" y1="150" x2="100" y2="80" />
+									<line x1="100" y1="36" x2="164" y2="76" />
+									<line x1="100" y1="80" x2="164" y2="76" />
+									<line x1="100" y1="124" x2="164" y2="124" />
+									<line x1="100" y1="166" x2="164" y2="124" />
+									<line x1="100" y1="80" x2="164" y2="124" />
+									<line x1="100" y1="124" x2="164" y2="76" />
+									<circle cx="36" cy="50" r="8" />
+									<circle cx="36" cy="100" r="8" />
+									<circle cx="36" cy="150" r="8" />
+									<circle cx="100" cy="36" r="8" />
+									<circle cx="100" cy="80" r="8" />
+									<circle cx="100" cy="124" r="8" />
+									<circle cx="100" cy="166" r="8" />
+									<circle cx="164" cy="76" r="8" class="tl-fill" />
+									<circle cx="164" cy="124" r="8" class="tl-fill" />
+								</>
+							)}
+							{plate.art === "infra" && (
+								<>
+									<rect x="10" y="10" width="180" height="180" rx="8" class="tl-dashed" />
+									<rect x="24" y="28" width="68" height="110" rx="5" />
+									<rect x="108" y="28" width="68" height="110" rx="5" />
+									<rect x="36" y="42" width="44" height="16" rx="2" />
+									<rect x="36" y="66" width="44" height="16" rx="2" />
+									<rect x="36" y="90" width="44" height="16" rx="2" />
+									<rect x="120" y="42" width="44" height="16" rx="2" />
+									<rect x="120" y="66" width="44" height="16" rx="2" />
+									<rect x="120" y="90" width="44" height="16" rx="2" />
+									<line x1="58" y1="138" x2="58" y2="158" />
+									<line x1="142" y1="138" x2="142" y2="158" />
+									<line x1="58" y1="158" x2="142" y2="158" />
+									<circle cx="100" cy="170" r="10" />
+								</>
+							)}
+						</g>
+					</g>
+					<g class="tl-callout max-sm:hidden">
+						<circle cx={cx + halfW} cy={plate.cy} r="3.5" class="tl-dot" />
+						<line
+							x1={cx + halfW + 6}
+							y1={plate.cy}
+							x2={labelX - 12}
+							y2={plate.cy}
+							class="tl-leader"
+							pathLength="1"
+						/>
+						<text x={labelX} y={plate.cy - 3} class="tl-name">
+							{plate.name}
+						</text>
+						<text x={labelX} y={plate.cy + 19} class="tl-role">
+							{plate.role}
+						</text>
+					</g>
+				</g>
+			))
+		}
+	</svg>
+	</div>
+	{legend && (
+	<figcaption class="mt-4 sm:hidden">
+		<ul class="grid gap-2 text-sm">
+			{
+				plates.map((plate) => (
+					<li class="flex items-baseline justify-between gap-4 border-b border-border pb-2">
+						<span class="font-medium">{plate.name}</span>
+						<span class="text-ink">{plate.role}</span>
+					</li>
+				))
+			}
+		</ul>
+	</figcaption>
+	)}
+</figure>
+
+<style>
+	.teardown {
+		--tl-stroke: var(--ink);
+	}
+	.teardown[data-animate] {
+		opacity: 0;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.teardown[data-animate] {
+			opacity: 1;
+		}
+	}
+	:global(.no-js) .teardown[data-animate] {
+		opacity: 1;
+	}
+	.tl-top {
+		fill: var(--plate);
+		stroke: var(--tl-stroke);
+		stroke-width: 1.5;
+		vector-effect: non-scaling-stroke;
+		stroke-linejoin: round;
+	}
+	.tl-side {
+		fill: color-mix(in oklch, var(--ink) 22%, var(--background));
+		stroke: var(--tl-stroke);
+		stroke-width: 1.5;
+		stroke-linejoin: round;
+	}
+	.tl-side-right {
+		fill: color-mix(in oklch, var(--ink) 38%, var(--background));
+	}
+	.tl-art :where(rect, line, circle) {
+		fill: none;
+		stroke: var(--tl-stroke);
+		stroke-width: 1.1;
+		vector-effect: non-scaling-stroke;
+		stroke-linecap: round;
+	}
+	.tl-art .tl-fill {
+		fill: var(--ink);
+	}
+	.tl-art .tl-dashed {
+		stroke-dasharray: 5 4;
+	}
+	.tl-dot {
+		fill: var(--ink);
+	}
+	.tl-leader {
+		stroke: var(--ink);
+		stroke-width: 1.25;
+		stroke-dasharray: 1;
+		stroke-dashoffset: 0;
+	}
+	.tl-name {
+		font-family: var(--font-heading);
+		font-size: 19px;
+		font-weight: 650;
+		letter-spacing: -0.01em;
+		fill: var(--foreground);
+	}
+	.tl-role {
+		font-family: var(--font-sans);
+		font-size: 15px;
+		fill: var(--ink);
+	}
+</style>
+
+<script>
+	import { gsap } from "gsap";
+
+	for (const figure of document.querySelectorAll<HTMLElement>(
+		"[data-teardown][data-animate]",
+	)) {
+		const mm = gsap.matchMedia();
+		mm.add("(prefers-reduced-motion: no-preference)", () => {
+			const layers = gsap.utils.toArray<SVGGElement>(".tl-layer", figure);
+			const art = figure.querySelectorAll(".tl-art");
+			const leaders = figure.querySelectorAll(".tl-leader");
+			const labels = figure.querySelectorAll(".tl-name, .tl-role, .tl-dot");
+
+			// Start as one assembled product, then take it apart.
+			gsap.set(layers, { y: (_, el) => Number(el.dataset.collapse) });
+			gsap.set(art, { opacity: 0 });
+			gsap.set(leaders, { strokeDashoffset: 1 });
+			gsap.set(labels, { opacity: 0 });
+			gsap.set(figure, { opacity: 1 });
+
+			gsap
+				.timeline({ delay: 0.35, defaults: { ease: "power3.out" } })
+				.to(layers, { y: 0, duration: 1.1, stagger: { each: 0.06, from: "end" } })
+				.to(art, { opacity: 1, duration: 0.5, stagger: 0.06 }, "-=0.6")
+				.to(
+					leaders,
+					{ strokeDashoffset: 0, duration: 0.45, stagger: 0.07 },
+					"-=0.35",
+				)
+				.to(
+					labels,
+					{ opacity: 1, duration: 0.4, stagger: { each: 0.03, from: "end" } },
+					"<0.15",
+				);
+		});
+	}
+</script>

@@ -1,0 +1,22 @@
+---
+interface Props {
+	sprints: { weeks: string; goal: string }[];
+	class?: string;
+}
+const { sprints, class: className } = Astro.props;
+const last = sprints.length - 1;
+---
+
+<ol class={className}>
+	{
+		sprints.map((sprint, index) => (
+			<li class="grid grid-cols-[6rem_1fr] gap-4 border-t border-border py-5 last:border-b">
+				<span class="text-sm text-muted-foreground tabular-nums">
+					{index < last ? `Sprint ${index + 1}` : "Launch"}
+					<span class="block">Weeks {sprint.weeks}</span>
+				</span>
+				<span class="text-lg font-medium">{sprint.goal}</span>
+			</li>
+		))
+	}
+</ol>

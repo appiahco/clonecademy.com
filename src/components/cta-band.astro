@@ -1,0 +1,44 @@
+---
+import { formatDate, nextCohort, site } from "../data/site";
+import Button from "./button.astro";
+
+interface Props {
+	title?: string;
+	body?: string;
+}
+const {
+	title = `Applications for Cohort ${nextCohort.number} close ${formatDate(nextCohort.applicationsClose)}.`,
+	body = `The cohort starts ${formatDate(nextCohort.starts)}, with ${nextCohort.seatsPerRole} seats in each role. Applying takes about ten minutes.`,
+} = Astro.props;
+---
+
+<section class="px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+	<div
+		class="relative isolate mx-auto max-w-7xl overflow-hidden rounded-3xl bg-primary px-6 py-14 text-primary-foreground sm:px-12 sm:py-20"
+	>
+		<div
+			class="absolute inset-0 -z-10 opacity-60 [--grid:oklch(1_0_0/8%)] bg-drafting"
+			aria-hidden="true"
+		>
+		</div>
+		<h2 class="display max-w-3xl text-4xl sm:text-5xl lg:text-6xl">{title}</h2>
+		<p class="mt-5 max-w-xl text-lg text-primary-foreground/80">{body}</p>
+		<div class="mt-9 flex flex-wrap gap-3">
+			<Button
+				href={site.applyHref}
+				size="xl"
+				variant="inverse"
+			>
+				Apply for Cohort {nextCohort.number}
+			</Button>
+			<Button
+				href="/pricing"
+				size="xl"
+				variant="ghost"
+				class="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+			>
+				See pricing
+			</Button>
+		</div>
+	</div>
+</section>
