@@ -14,10 +14,18 @@ interface Props {
 	product: string;
 	layers: Layer[];
 	animate?: boolean;
+	/** List the layers under the drawing on small screens. */
+	legend?: boolean;
 	class?: string;
 }
 
-const { product, layers, animate = false, class: className } = Astro.props;
+const {
+	product,
+	layers,
+	animate = false,
+	legend = true,
+	class: className,
+} = Astro.props;
 
 // Plate geometry, in viewBox units. Plates are 2:1 isometric squares.
 const cx = 250;
@@ -215,6 +223,7 @@ const titleId = `teardown-${product.toLowerCase().replace(/\W+/g, "-")}`;
 		}
 	</svg>
 	</div>
+	{legend && (
 	<figcaption class="mt-4 sm:hidden">
 		<ul class="grid gap-2 text-sm">
 			{
@@ -227,6 +236,7 @@ const titleId = `teardown-${product.toLowerCase().replace(/\W+/g, "-")}`;
 			}
 		</ul>
 	</figcaption>
+	)}
 </figure>
 
 <style>
