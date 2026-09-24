@@ -1,7 +1,7 @@
 ---
 import List from "@phosphor-icons/core/assets/regular/list.svg";
 import X from "@phosphor-icons/core/assets/regular/x.svg";
-import { nav, nextCohort, site } from "../data/site";
+import { nav, site } from "../data/site";
 import Button from "./button.astro";
 import ModeToggle from "./mode-toggle.astro";
 import Wordmark from "./wordmark.astro";
@@ -44,7 +44,7 @@ const isCurrent = (href: string) =>
 
 		<div class="ml-auto flex items-center gap-2">
 			<ModeToggle />
-			<Button href={site.applyHref} size="lg" class="hidden px-4 sm:inline-flex">
+			<Button href={site.applyHref} size="lg" class="px-4">
 				Apply
 			</Button>
 			<Button
@@ -83,11 +83,6 @@ const isCurrent = (href: string) =>
 					</li>
 				))
 			}
-			<li class="pt-3 pb-2 sm:hidden">
-				<Button href={site.applyHref} size="xl" class="w-full">
-					Apply for Cohort {nextCohort.number}
-				</Button>
-			</li>
 		</ul>
 	</nav>
 </header>
