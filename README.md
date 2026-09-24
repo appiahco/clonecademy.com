@@ -47,3 +47,4 @@ Dokploy serves the output directly; there's nothing else to configure. If a futu
 - **Astro** — pages live in `src/pages/`, static assets in `public/`. Configure the framework in `astro.config.mjs`.
 - **Biome** — a single tool for linting, formatting (tabs, double quotes) and import sorting. Configure it in `biome.jsonc`.
 - **Lefthook** — runs `pnpm lint` on staged files before each commit and re-stages any fixes. Configure it in `lefthook.jsonc`.
+- **Claude Code skills** — a set of skills for Claude Code live in `.agents/skills/` and are symlinked into `.claude/skills/`. `skills-lock.json` tracks where each one came from.

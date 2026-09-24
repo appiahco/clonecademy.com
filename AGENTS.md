@@ -25,3 +25,9 @@ Package manager is **pnpm** (pinned via `packageManager`/`devEngines` in `packag
 - Commit messages follow Conventional Commits (`build:`, `feat:`, `style:`).
 - `tsconfig.json` extends `astro/tsconfigs/base` (not `strict`); there is no type-check script, so `astro check` is not wired up.
 - `pnpm-workspace.yaml` only holds `allowBuilds` (esbuild, lefthook) for pnpm's build-script allowlist. It isn't a multi-package workspace.
+
+## Skills
+
+- Skills live under `.agents/skills/<name>/`; `.claude/skills/<name>` is a symlink to `../../.agents/skills/<name>` for each one. Don't edit skill contents through the `.claude/skills/` path or duplicate files between the two — always change `.agents/skills/`.
+- `skills-lock.json` records each skill's `source` repo, `sourceType`, `skillPath`, and `computedHash`. Most entries source from `mattpocock/skills`; a few (`agent-browser`, `building-components`, `ucp`, `web-design-guidelines`) come from other `vercel*` repos.
+- Biome ignores `.agents/` and `skills-lock.json`, so skill content isn't linted or reformatted.
