@@ -1,7 +1,7 @@
 ---
 // An exploded isometric drawing of a product: one plate per layer, each with
 // a callout naming the layer and the role that builds it. With `animate`,
-// the plates start stacked and pull apart once on load.
+// the plates start stacked and pull apart once they scroll into view.
 
 interface Layer {
 	name: string;
@@ -326,8 +326,8 @@ const titleId = `teardown-${product.toLowerCase().replace(/\W+/g, "-")}`;
 			gsap.set(labels, { opacity: 0 });
 			gsap.set(figure, { opacity: 1 });
 
-			gsap
-				.timeline({ delay: 0.35, defaults: { ease: "power3.out" } })
+			const timeline = gsap
+				.timeline({ paused: true, delay: 0.35, defaults: { ease: "power3.out" } })
 				.to(layers, { y: 0, duration: 1.1, stagger: { each: 0.06, from: "end" } })
 				.to(art, { opacity: 1, duration: 0.5, stagger: 0.06 }, "-=0.6")
 				.to(
@@ -340,6 +340,19 @@ const titleId = `teardown-${product.toLowerCase().replace(/\W+/g, "-")}`;
 					{ opacity: 1, duration: 0.4, stagger: { each: 0.03, from: "end" } },
 					"<0.15",
 				);
+
+			// Play once the drawing is on screen, so one below the fold isn't
+			// already assembled by the time the visitor reaches it.
+			const observer = new IntersectionObserver(
+				([entry]) => {
+					if (!entry.isIntersecting) return;
+					timeline.play();
+					observer.disconnect();
+				},
+				{ threshold: 0.3 },
+			);
+			observer.observe(figure);
+			return () => observer.disconnect();
 		});
 	}
 </script>
