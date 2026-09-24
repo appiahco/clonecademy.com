@@ -6,7 +6,8 @@
 		"lint": "biome check --write --verbose",
 		"dev": "astro dev",
 		"build": "astro build",
-		"preview": "astro preview"
+		"preview": "astro preview",
+		"og": "node scripts/og-image.mjs"
 	},
 	"license": "UNLICENSED",
 	"devEngines": {
@@ -20,6 +21,7 @@
 	"type": "module",
 	"devDependencies": {
 		"@biomejs/biome": "2.5.13",
+		"@resvg/resvg-js": "^2.6.2",
 		"lefthook": "^2.1.14"
 	},
 	"dependencies": {
