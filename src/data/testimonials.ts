@@ -5,7 +5,7 @@ export const testimonials = [
 		quote:
 			"I'd paid two agencies to build our MVP and couldn't read a line of what they wrote. Four months later I shipped our booking flow myself, and I finally know what I'm hiring for.",
 		name: "Adaeze Okafor",
-		detail: "Frontend, Cohort 2. Founder of Tallyroom",
+		detail: "Frontend, Cohort 2. Founder of Parkbnb",
 	},
 	{
 		quote:
@@ -17,7 +17,7 @@ export const testimonials = [
 		quote:
 			"I came in scared of AWS bills. I left with our whole stack in Terraform and a budget alert I've never had to worry about.",
 		name: "Priya Raman",
-		detail: "Cloud, Cohort 3. Cofounder of Fieldnote",
+		detail: "Cloud, Cohort 3. Cofounder of SRSly",
 	},
 	{
 		quote:
