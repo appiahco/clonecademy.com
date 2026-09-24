@@ -86,7 +86,7 @@ const svg = `
 	<g font-family="Bricolage Grotesque 96pt SemiCondensed" font-weight="700" font-size="80" letter-spacing="-3" fill="${colors.foreground}">
 		<text x="68" y="262" fill="${colors.ink}">Stop outsourcing</text>
 		<text x="68" y="342">your product.</text>
-		<text x="68" y="422"><tspan fill="${colors.ink}">Build it</tspan> by yourself.</text>
+		<text x="68" y="422"><tspan fill="${colors.ink}">Build it</tspan> yourself.</text>
 	</g>
 	<text x="72" y="540" font-family="Instrument Sans" font-weight="400" font-size="30" fill="${colors.muted}">A 16-week remote cohort for founders</text>
 </svg>`;
