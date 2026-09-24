@@ -10,13 +10,13 @@ export default defineConfig({
 	fonts: [
 		{
 			provider: fontProviders.google(),
-			name: "Bricolage Grotesque",
-			cssVariable: "--font-bricolage",
-			weights: ["400 800"],
-			// The display type uses the width and optical size axes too.
+			name: "Archivo",
+			cssVariable: "--font-archivo",
+			weights: ["400 900"],
+			// The display type is set expanded, so load the width axis too.
 			options: {
 				experimental: {
-					variableAxis: { opsz: [["12", "96"]], wdth: [["75", "100"]] },
+					variableAxis: { wdth: [["100", "125"]] },
 				},
 			},
 			styles: ["normal"],
