@@ -1,0 +1,118 @@
+---
+import Check from "@phosphor-icons/core/assets/regular/check.svg";
+import Button from "../components/button.astro";
+import CtaBand from "../components/cta-band.astro";
+import FaqList from "../components/faq-list.astro";
+import PageHeader from "../components/page-header.astro";
+import { faq } from "../data/faq";
+import { formatPrice, included, pricing } from "../data/pricing";
+import { site } from "../data/site";
+import Layout from "../layouts/index.astro";
+
+const { perRole, fullStack, teamDiscountPercent } = pricing;
+const teamSeat = Math.round(perRole.upfront * (1 - teamDiscountPercent / 100));
+const fullStackSaving = perRole.upfront * fullStack.cohorts - fullStack.upfront;
+
+const plans = [
+	{
+		name: "One role",
+		price: formatPrice(perRole.upfront),
+		unit: "per founder",
+		terms: `or ${perRole.installments.count} monthly payments of ${formatPrice(perRole.installments.amount)}`,
+		summary:
+			"One seat on a cohort team, matched with founders in the other three roles.",
+		cta: "Apply for one role",
+		featured: true,
+	},
+	{
+		name: "Team of four",
+		price: formatPrice(teamSeat),
+		unit: "per founder",
+		terms: `${teamDiscountPercent}% off every seat when four cofounders enrol together`,
+		summary:
+			"Bring your own team, one founder per role, and build your own startup together in weeks 13 to 15.",
+		cta: "Apply as a team",
+		featured: false,
+	},
+	{
+		name: "Full-stack founder",
+		price: formatPrice(fullStack.upfront),
+		unit: `for all ${fullStack.cohorts} roles`,
+		terms: `or ${fullStack.installments.count} monthly payments of ${formatPrice(fullStack.installments.amount)}. Saves ${formatPrice(fullStackSaving)}`,
+		summary:
+			"Every role, one per cohort, in any order. Keep your team and swap seats each time.",
+		cta: "Apply for the pass",
+		featured: false,
+	},
+];
+const paymentQuestions =
+	faq.find((group) => group.topic === "Admissions and payment")?.items ?? [];
+---
+
+<Layout
+	title="Pricing"
+	description={`Clonecademy costs ${formatPrice(perRole.upfront)} per role, with instalments, team discounts and a Full-stack founder pass for all four roles.`}
+>
+	<PageHeader
+		title="One price per role, no surprises"
+		lede={`Prices are in ${pricing.currency} and include everything your team needs to ship, including cloud and AI credits. Hold your seat with a ${formatPrice(pricing.deposit)} deposit.`}
+	/>
+
+	<section class="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+		<ul class="grid gap-6 lg:grid-cols-3">
+			{
+				plans.map((plan) => (
+					<li
+						class:list={[
+							"flex flex-col rounded-2xl border p-8",
+							plan.featured ? "border-ink ring-1 ring-ink" : "border-border",
+						]}
+					>
+						<h2 class="text-xl font-semibold">{plan.name}</h2>
+						<p class="mt-2 text-muted-foreground">{plan.summary}</p>
+						<p class="mt-8">
+							<span class="font-heading text-5xl font-bold tracking-tight">{plan.price}</span>
+							<span class="ml-1 text-muted-foreground">{plan.unit}</span>
+						</p>
+						<p class="mt-2 mb-8 text-sm text-muted-foreground">{plan.terms}</p>
+						<Button
+							href={site.applyHref}
+							size="xl"
+							variant={plan.featured ? "default" : "outline"}
+							class="mt-auto w-full"
+						>
+							{plan.cta}
+						</Button>
+					</li>
+				))
+			}
+		</ul>
+
+		<div class="mt-16 grid gap-10 lg:grid-cols-12">
+			<h2 class="text-2xl font-bold tracking-tight lg:col-span-4">Every plan includes</h2>
+			<ul class="grid gap-4 sm:grid-cols-2 lg:col-span-8">
+				{
+					included.map((item) => (
+						<li class="flex gap-3">
+							<Check class="mt-1 size-5 shrink-0 text-ink" aria-hidden="true" />
+							<span>{item}</span>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<section class="border-t border-border">
+		<div class="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 sm:py-24 lg:grid-cols-12 lg:px-8">
+			<h2 class="text-3xl font-bold tracking-[-0.025em] lg:col-span-4">
+				Payment questions
+			</h2>
+			<div class="lg:col-span-8">
+				<FaqList items={paymentQuestions} />
+			</div>
+		</div>
+	</section>
+
+	<CtaBand />
+</Layout>
