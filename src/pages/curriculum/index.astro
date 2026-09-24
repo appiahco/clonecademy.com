@@ -1,0 +1,90 @@
+---
+import ArrowRight from "@phosphor-icons/core/assets/regular/arrow-right.svg";
+import Button from "../../components/button.astro";
+import CtaBand from "../../components/cta-band.astro";
+import PageHeader from "../../components/page-header.astro";
+import { formatPrice, pricing } from "../../data/pricing";
+import { cohort } from "../../data/site";
+import Layout from "../../layouts/index.astro";
+import { getRoles } from "../../lib/content";
+import { icons } from "../../lib/icons";
+
+const roles = await getRoles();
+---
+
+<Layout
+	title="Curriculum"
+	description="Four roles, one team: frontend, backend, cloud and AI/ML engineering curricula for founders, each 16 weeks and fully remote."
+>
+	<PageHeader
+		title="Pick the role you'd hire first"
+		lede={`There are four roles, and each is a full seat on a cohort team. None has prerequisites, and every role runs for the same ${cohort.weeks} weeks, so the team finishes together.`}
+	/>
+
+	<section class="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+		<ul class="divide-y divide-border border-y border-border">
+			{
+				roles.map((role) => {
+					const Icon = icons[role.data.icon];
+					return (
+						<li class="grid gap-8 py-12 lg:grid-cols-12">
+							<div class="lg:col-span-5">
+								<Icon class="size-9 text-ink" aria-hidden="true" />
+								<h2 class="mt-5 text-3xl font-bold tracking-tight sm:text-4xl">
+									<a href={`/curriculum/${role.id}`} class="hover:text-primary">
+										{role.data.title}
+									</a>
+								</h2>
+								<p class="mt-2 font-medium text-ink">{role.data.owns}</p>
+								<p class="mt-4 max-w-md leading-relaxed text-muted-foreground">
+									{role.data.summary}
+								</p>
+							</div>
+							<div class="lg:col-span-4">
+								<h3 class="text-sm font-semibold">Foundations, weeks 1 to 3</h3>
+								<ol class="mt-3 space-y-3">
+									{role.data.foundations.map((item) => (
+										<li>
+											<p class="font-medium">{item.title}</p>
+											<p class="text-sm text-muted-foreground">{item.detail}</p>
+										</li>
+									))}
+								</ol>
+							</div>
+							<div class="flex flex-col lg:col-span-3">
+								<h3 class="text-sm font-semibold">Stack</h3>
+								<p class="mt-3 text-muted-foreground">{role.data.stack.join(", ")}</p>
+								<a
+									href={`/curriculum/${role.id}`}
+									class="mt-6 inline-flex items-center gap-1.5 font-medium hover:text-primary lg:mt-auto"
+								>
+									{role.data.short} curriculum
+									<ArrowRight class="size-4" aria-hidden="true" />
+								</a>
+							</div>
+						</li>
+					);
+				})
+			}
+		</ul>
+	</section>
+
+	<section class="mx-auto w-full max-w-7xl px-4 pb-4 sm:px-6 lg:px-8">
+		<div class="grid gap-8 rounded-2xl border border-border p-8 sm:p-12 lg:grid-cols-12 lg:items-end">
+			<div class="lg:col-span-8">
+				<h2 class="text-3xl font-bold tracking-tight">Want all four?</h2>
+				<p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+					Take one role per cohort, in any order. The Full-stack founder pass
+					covers all {pricing.fullStack.cohorts} for
+					{formatPrice(pricing.fullStack.upfront)}, and you can keep the same
+					team, swapping seats each time.
+				</p>
+			</div>
+			<div class="lg:col-span-4 lg:text-right">
+				<Button href="/pricing" size="xl" variant="outline">Compare plans</Button>
+			</div>
+		</div>
+	</section>
+
+	<CtaBand />
+</Layout>

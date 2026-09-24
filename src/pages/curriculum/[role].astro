@@ -1,0 +1,192 @@
+---
+import { render } from "astro:content";
+import ArrowRight from "@phosphor-icons/core/assets/regular/arrow-right.svg";
+import Check from "@phosphor-icons/core/assets/regular/check.svg";
+import type { GetStaticPaths } from "astro";
+import Button from "../../components/button.astro";
+import CtaBand from "../../components/cta-band.astro";
+import PageHeader from "../../components/page-header.astro";
+import { formatPrice, pricing } from "../../data/pricing";
+import { cohort, nextCohort, site } from "../../data/site";
+import Layout from "../../layouts/index.astro";
+import { getDeliverables, getProducts, getRoles } from "../../lib/content";
+import { icons } from "../../lib/icons";
+
+export const getStaticPaths = (async () => {
+	const roles = await getRoles();
+	return roles.map((role) => ({ params: { role: role.id }, props: { role } }));
+}) satisfies GetStaticPaths;
+
+const { role } = Astro.props;
+const { Content } = await render(role);
+const products = await getProducts();
+const teammates = (await getRoles()).filter((r) => r.id !== role.id);
+const Icon = icons[role.data.icon];
+const asRole = /^[aeiou]/i.test(role.data.short)
+	? `an ${role.data.short} engineer`
+	: `a ${role.data.short.toLowerCase()} engineer`;
+
+const facts = [
+	{ term: "Length", detail: `${cohort.weeks} weeks` },
+	{ term: "Time", detail: `About ${cohort.hoursPerWeek} hours a week` },
+	{ term: "Format", detail: "Remote, live classes" },
+	{
+		term: "Price",
+		detail: `${formatPrice(pricing.perRole.upfront)} or ${pricing.perRole.installments.count} × ${formatPrice(pricing.perRole.installments.amount)}`,
+	},
+];
+---
+
+<Layout
+	title={`${role.data.title} curriculum`}
+	description={`${role.data.summary} A ${cohort.weeks}-week remote cohort for founders.`}
+>
+	<PageHeader title={role.data.title} lede={role.data.summary}>
+		<Fragment slot="before">
+			<Icon class="mb-6 size-10 text-ink" aria-hidden="true" />
+		</Fragment>
+		<dl class="mt-10 grid max-w-3xl grid-cols-2 gap-x-8 gap-y-5 border-t border-border pt-6 sm:grid-cols-4">
+			{
+				facts.map((fact) => (
+					<div>
+						<dt class="text-sm text-muted-foreground">{fact.term}</dt>
+						<dd class="mt-0.5 font-medium">{fact.detail}</dd>
+					</div>
+				))
+			}
+		</dl>
+		<div class="mt-10 flex flex-wrap gap-3">
+			<Button href={site.applyHref} size="xl">Apply as {asRole}</Button>
+		</div>
+	</PageHeader>
+
+	<section class="mx-auto grid w-full max-w-7xl gap-14 px-4 py-20 sm:px-6 sm:py-24 lg:grid-cols-12 lg:px-8">
+		<div class="typeset text-lg lg:col-span-7">
+			<Content />
+		</div>
+		<aside class="lg:col-span-4 lg:col-start-9">
+			<h2 class="text-sm font-semibold">Stack</h2>
+			<ul class="mt-4 flex flex-wrap gap-2">
+				{
+					role.data.stack.map((tool) => (
+						<li class="rounded-md border border-border px-3 py-1.5 text-sm">{tool}</li>
+					))
+				}
+			</ul>
+		</aside>
+	</section>
+
+	<section class="border-y border-border bg-muted/50">
+		<div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+			<h2 class="text-3xl font-bold tracking-[-0.025em] sm:text-4xl">Weeks 1 to 3: foundations</h2>
+			<p class="mt-4 max-w-2xl text-lg text-muted-foreground">
+				A week on each, taught live to your role's class before teams form.
+			</p>
+			<ol class="mt-12 grid gap-10 md:grid-cols-3">
+				{
+					role.data.foundations.map((item, index) => (
+						<li class="border-t-2 border-ink pt-5">
+							<p class="text-sm text-muted-foreground">Week {index + 1}</p>
+							<h3 class="mt-1 text-xl font-semibold">{item.title}</h3>
+							<p class="mt-2 leading-relaxed text-muted-foreground">{item.detail}</p>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</section>
+
+	<section class="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+		<h2 class="text-3xl font-bold tracking-[-0.025em] sm:text-4xl">Weeks 4 to 12: what you build</h2>
+		<p class="mt-4 max-w-2xl text-lg text-muted-foreground">
+			Your team picks one product to clone. Here's what you own on each.
+		</p>
+		<div class="mt-12 grid gap-6 lg:grid-cols-2">
+			{
+				products.map((product) => {
+					const ProductIcon = icons[product.data.icon];
+					return (
+						<article class="rounded-2xl border border-border p-6 sm:p-8">
+							<div class="flex items-center gap-3">
+								<ProductIcon class="size-8" aria-hidden="true" />
+								<h3 class="text-2xl font-bold tracking-tight">{product.data.name} clone</h3>
+							</div>
+							<ul class="mt-6 space-y-3">
+								{getDeliverables(product, role.id).map((item) => (
+									<li class="flex gap-3">
+										<Check class="mt-1 size-4 shrink-0 text-ink" aria-hidden="true" />
+										<span>{item}</span>
+									</li>
+								))}
+							</ul>
+							<a
+								href={`/projects/${product.id}`}
+								class="mt-8 inline-flex items-center gap-1.5 text-sm font-medium hover:text-primary"
+							>
+								{product.data.name} teardown
+								<ArrowRight class="size-4" aria-hidden="true" />
+							</a>
+						</article>
+					);
+				})
+			}
+		</div>
+	</section>
+
+	<section class="border-t border-border">
+		<div class="mx-auto grid max-w-7xl gap-14 px-4 py-20 sm:px-6 sm:py-24 lg:grid-cols-2 lg:px-8">
+			<div>
+				<h2 class="text-3xl font-bold tracking-[-0.025em] sm:text-4xl">Weeks 13 to 16: your own product</h2>
+				<p class="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
+					Your team spends three weeks building one teammate's startup with the
+					same stack, then demos both products on demo day. You own the
+					same part of the product you owned on the clone.
+				</p>
+			</div>
+			<div>
+				<h2 class="text-xl font-semibold">You'll leave able to</h2>
+				<ul class="mt-5 space-y-4">
+					{
+						role.data.outcomes.map((outcome) => (
+							<li class="flex gap-3">
+								<Check class="mt-1 size-5 shrink-0 text-ink" aria-hidden="true" />
+								<span class="leading-relaxed">{outcome}</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<section class="border-t border-border">
+		<div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+			<h2 class="text-xl font-semibold">Your teammates</h2>
+			<ul class="mt-6 grid gap-4 sm:grid-cols-3">
+				{
+					teammates.map((mate) => {
+						const MateIcon = icons[mate.data.icon];
+						return (
+							<li>
+								<a
+									href={`/curriculum/${mate.id}`}
+									class="flex items-center gap-4 rounded-xl border border-border p-5 hover:border-ink"
+								>
+									<MateIcon class="size-7 text-ink" aria-hidden="true" />
+									<span>
+										<span class="block font-semibold">{mate.data.title}</span>
+										<span class="block text-sm text-muted-foreground">{mate.data.owns}</span>
+									</span>
+								</a>
+							</li>
+						);
+					})
+				}
+			</ul>
+		</div>
+	</section>
+
+	<CtaBand
+		title={`Join Cohort ${nextCohort.number} as ${asRole}.`}
+	/>
+</Layout>
