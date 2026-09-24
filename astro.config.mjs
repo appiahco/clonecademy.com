@@ -13,6 +13,12 @@ export default defineConfig({
 			name: "Bricolage Grotesque",
 			cssVariable: "--font-bricolage",
 			weights: ["400 800"],
+			// The display type uses the width and optical size axes too.
+			options: {
+				experimental: {
+					variableAxis: { opsz: [["12", "96"]], wdth: [["75", "100"]] },
+				},
+			},
 			styles: ["normal"],
 			subsets: ["latin"],
 			fallbacks: ["ui-sans-serif", "system-ui", "sans-serif"],
