@@ -1,0 +1,39 @@
+---
+import { getCollection, render } from "astro:content";
+import ArrowLeft from "@phosphor-icons/core/assets/regular/arrow-left.svg";
+import type { GetStaticPaths } from "astro";
+import CtaBand from "../../components/cta-band.astro";
+import { formatDate } from "../../data/site";
+import Layout from "../../layouts/index.astro";
+
+export const getStaticPaths = (async () => {
+	const posts = await getCollection("posts", ({ data }) => !data.draft);
+	return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+	<article class="mx-auto w-full max-w-3xl px-4 pt-12 pb-8 sm:px-6 sm:pt-16">
+		<a href="/blog" class="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
+			<ArrowLeft class="size-4" aria-hidden="true" />
+			All posts
+		</a>
+		<header class="mt-10 border-b border-border pb-10">
+			<h1 class="display text-4xl sm:text-6xl">{post.data.title}</h1>
+			<p class="mt-6 text-xl leading-relaxed text-muted-foreground">{post.data.description}</p>
+			<p class="mt-6 text-sm">
+				<span class="font-medium">{post.data.author}</span>
+				<span class="text-muted-foreground">
+					, <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+				</span>
+			</p>
+		</header>
+		<div class="typeset mt-10 text-lg">
+			<Content />
+		</div>
+	</article>
+	<CtaBand />
+</Layout>

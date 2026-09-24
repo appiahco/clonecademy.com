@@ -44,4 +44,15 @@ const products = defineCollection({
 	}),
 });
 
-export const collections = { roles, products };
+const posts = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/posts" }),
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		pubDate: z.coerce.date(),
+		author: z.string().default("Karthik G. Appiah"),
+		draft: z.boolean().default(false),
+	}),
+});
+
+export const collections = { roles, products, posts };
