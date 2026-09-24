@@ -1,0 +1,24 @@
+---
+import Button from "../components/button.astro";
+import Layout from "../layouts/index.astro";
+---
+
+<Layout title="Page not found" description="This page doesn't exist.">
+	<section class="relative isolate grid grow place-items-center overflow-hidden px-4 py-24">
+		<div class="bg-drafting absolute inset-0 -z-10 mask-radial-from-10% mask-radial-to-70%" aria-hidden="true"></div>
+		<div class="text-center">
+			<svg viewBox="0 0 120 80" class="mx-auto w-40" fill="none" aria-hidden="true">
+				<rect x="10" y="10" width="60" height="60" rx="8" stroke="currentColor" stroke-width="3" />
+				<rect x="50" y="10" width="60" height="60" rx="8" stroke="var(--ink)" stroke-width="3" stroke-dasharray="7 5" />
+			</svg>
+			<h1 class="display mt-8 text-5xl sm:text-6xl">This page wasn't cloned</h1>
+			<p class="mx-auto mt-5 max-w-md text-lg text-muted-foreground">
+				The link may be old, or the address mistyped.
+			</p>
+			<div class="mt-9 flex flex-wrap justify-center gap-3">
+				<Button href="/" size="xl">Go to the home page</Button>
+				<Button href="/curriculum" size="xl" variant="outline">See the curriculum</Button>
+			</div>
+		</div>
+	</section>
+</Layout>
