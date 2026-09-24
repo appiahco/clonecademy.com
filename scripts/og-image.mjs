@@ -21,9 +21,10 @@ const colors = {
 	plate: "#f3fbfa",
 };
 
-// Static instances of the site's fonts, as TrueType for resvg.
+// Static instances of the site's fonts, as TrueType for resvg. The
+// instanced Bricolage file names its family after the axes it was cut at.
 const fontCss = await fetch(
-	"https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@700&family=Geist:wght@400;500",
+	"https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@96,87.5,700&family=Instrument+Sans:wght@400;500",
 	{ headers: { "User-Agent": "Mozilla/4.0" } },
 ).then((response) => response.text());
 const fontUrls = [...fontCss.matchAll(/url\((https:[^)]+\.ttf)\)/g)].map(
@@ -79,19 +80,23 @@ const svg = `
 	<g transform="translate(72 72)">
 		<rect x="2" y="2" width="28" height="28" rx="5" fill="none" stroke="${colors.foreground}" stroke-width="4" />
 		<rect x="14" y="14" width="28" height="28" rx="5" fill="none" stroke="${colors.ink}" stroke-width="4" stroke-dasharray="6 4.4" />
-		<text x="58" y="32" font-family="Familjen Grotesk" font-weight="700" font-size="36" letter-spacing="-1" fill="${colors.foreground}">clonecademy</text>
+		<text x="58" y="32" font-family="Bricolage Grotesque 96pt SemiCondensed" font-weight="700" font-size="36" letter-spacing="-1" fill="${colors.foreground}">clonecademy</text>
 	</g>
 
-	<g font-family="Familjen Grotesk" font-weight="700" font-size="80" letter-spacing="-3" fill="${colors.foreground}">
+	<g font-family="Bricolage Grotesque 96pt SemiCondensed" font-weight="700" font-size="80" letter-spacing="-3" fill="${colors.foreground}">
 		<text x="68" y="262" fill="${colors.ink}">Stop outsourcing</text>
 		<text x="68" y="342">your product.</text>
 		<text x="68" y="422"><tspan fill="${colors.ink}">Build it</tspan> by yourself.</text>
 	</g>
-	<text x="72" y="540" font-family="Geist" font-weight="400" font-size="30" fill="${colors.muted}">A 16-week remote cohort for founders</text>
+	<text x="72" y="540" font-family="Instrument Sans" font-weight="400" font-size="30" fill="${colors.muted}">A 16-week remote cohort for founders</text>
 </svg>`;
 
 const png = new Resvg(svg, {
-	font: { fontFiles, loadSystemFonts: false, defaultFontFamily: "Geist" },
+	font: {
+		fontFiles,
+		loadSystemFonts: false,
+		defaultFontFamily: "Instrument Sans",
+	},
 	fitTo: { mode: "width", value: WIDTH },
 })
 	.render()

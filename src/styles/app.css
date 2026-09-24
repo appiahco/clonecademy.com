@@ -4,8 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-	--font-sans: var(--font-geist);
-	--font-heading: var(--font-familjen);
+	--font-sans: var(--font-instrument);
+	--font-heading: var(--font-bricolage);
 	--font-mono: var(--font-geist-mono);
 	--color-ink: var(--ink);
 	--color-ink-soft: var(--ink-soft);
@@ -169,9 +169,12 @@
 			linear-gradient(90deg, var(--grid) 1px, transparent 1px);
 		background-size: 24px 24px;
 	}
-	/* Display type: Familjen Grotesk, bold and tightly tracked. */
+	/* Display type: Bricolage opens up and tightens at large sizes. */
 	.display {
 		font-family: var(--font-heading);
+		font-variation-settings:
+			"opsz" 96,
+			"wdth" 88;
 		font-weight: 700;
 		letter-spacing: -0.035em;
 		line-height: 0.95;
