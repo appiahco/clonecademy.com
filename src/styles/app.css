@@ -5,7 +5,7 @@
 
 @theme inline {
 	--font-sans: var(--font-geist);
-	--font-heading: var(--font-archivo);
+	--font-heading: var(--font-familjen);
 	--font-mono: var(--font-geist-mono);
 	--color-ink: var(--ink);
 	--color-ink-soft: var(--ink-soft);
@@ -169,12 +169,11 @@
 			linear-gradient(90deg, var(--grid) 1px, transparent 1px);
 		background-size: 24px 24px;
 	}
-	/* Display type: Archivo set expanded and heavy, like a title block. */
+	/* Display type: Familjen Grotesk, bold and tightly tracked. */
 	.display {
 		font-family: var(--font-heading);
-		font-variation-settings: "wdth" 112;
-		font-weight: 800;
-		letter-spacing: -0.03em;
+		font-weight: 700;
+		letter-spacing: -0.035em;
 		line-height: 0.95;
 	}
 }

@@ -23,7 +23,7 @@ const colors = {
 
 // Static instances of the site's fonts, as TrueType for resvg.
 const fontCss = await fetch(
-	"https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Geist:wght@400;500",
+	"https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@700&family=Geist:wght@400;500",
 	{ headers: { "User-Agent": "Mozilla/4.0" } },
 ).then((response) => response.text());
 const fontUrls = [...fontCss.matchAll(/url\((https:[^)]+\.ttf)\)/g)].map(
@@ -79,10 +79,10 @@ const svg = `
 	<g transform="translate(72 72)">
 		<rect x="2" y="2" width="28" height="28" rx="5" fill="none" stroke="${colors.foreground}" stroke-width="4" />
 		<rect x="14" y="14" width="28" height="28" rx="5" fill="none" stroke="${colors.ink}" stroke-width="4" stroke-dasharray="6 4.4" />
-		<text x="58" y="32" font-family="Archivo" font-weight="800" font-size="36" letter-spacing="-1" fill="${colors.foreground}">clonecademy</text>
+		<text x="58" y="32" font-family="Familjen Grotesk" font-weight="700" font-size="36" letter-spacing="-1" fill="${colors.foreground}">clonecademy</text>
 	</g>
 
-	<g font-family="Archivo" font-weight="800" font-size="68" letter-spacing="-2" fill="${colors.foreground}">
+	<g font-family="Familjen Grotesk" font-weight="700" font-size="80" letter-spacing="-3" fill="${colors.foreground}">
 		<text x="68" y="262" fill="${colors.ink}">Stop outsourcing</text>
 		<text x="68" y="342">your product.</text>
 		<text x="68" y="422"><tspan fill="${colors.ink}">Build it</tspan> by yourself.</text>

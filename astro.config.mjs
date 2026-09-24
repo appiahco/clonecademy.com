@@ -10,15 +10,9 @@ export default defineConfig({
 	fonts: [
 		{
 			provider: fontProviders.google(),
-			name: "Archivo",
-			cssVariable: "--font-archivo",
-			weights: ["400 900"],
-			// The display type is set expanded, so load the width axis too.
-			options: {
-				experimental: {
-					variableAxis: { wdth: [["100", "125"]] },
-				},
-			},
+			name: "Familjen Grotesk",
+			cssVariable: "--font-familjen",
+			weights: ["400 700"],
 			styles: ["normal"],
 			subsets: ["latin"],
 			fallbacks: ["ui-sans-serif", "system-ui", "sans-serif"],
