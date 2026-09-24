@@ -20,6 +20,7 @@ import {
 	getRoles,
 } from "../lib/content";
 import { icons } from "../lib/icons";
+import { homeGraph } from "../lib/structured-data";
 
 const roles = await getRoles();
 const products = await getProducts();
@@ -38,7 +39,7 @@ const faqPreview = faq.flatMap((group) => group.items).slice(0, 4);
 const [featured, ...moreQuotes] = testimonials;
 ---
 
-<Layout>
+<Layout jsonLd={homeGraph}>
 	<!-- Hero -->
 	<section class="relative isolate overflow-hidden border-b border-border">
 		<div

@@ -5,11 +5,13 @@ import PageHeader from "../components/page-header.astro";
 import { faq } from "../data/faq";
 import { site } from "../data/site";
 import Layout from "../layouts/index.astro";
+import { faqPage } from "../lib/structured-data";
 
 const slug = (topic: string) => topic.toLowerCase().replace(/\W+/g, "-");
 ---
 
 <Layout
+	jsonLd={faqPage}
 	title="FAQ"
 	description="Answers to common questions about Clonecademy: experience needed, choosing a role, teams, time commitment, pricing and refunds."
 >

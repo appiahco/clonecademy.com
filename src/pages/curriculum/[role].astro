@@ -11,6 +11,7 @@ import { cohort, nextCohort, site } from "../../data/site";
 import Layout from "../../layouts/index.astro";
 import { getDeliverables, getProducts, getRoles } from "../../lib/content";
 import { icons } from "../../lib/icons";
+import { course } from "../../lib/structured-data";
 
 export const getStaticPaths = (async () => {
 	const roles = await getRoles();
@@ -38,6 +39,7 @@ const facts = [
 ---
 
 <Layout
+	jsonLd={course(role)}
 	title={`${role.data.title} curriculum`}
 	description={`${role.data.summary} A ${cohort.weeks}-week remote cohort for founders.`}
 >
