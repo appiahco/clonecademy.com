@@ -1,41 +1,82 @@
 ---
+import { Font } from "astro:assets";
+import SiteFooter from "../components/site-footer.astro";
+import SiteHeader from "../components/site-header.astro";
+import { site } from "../data/site";
 import "../styles/app.css";
+
+interface Props {
+	/** Page title. Omit on the home page to use the site name alone. */
+	title?: string;
+	description?: string;
+}
+
+const { title, description = site.description } = Astro.props;
+const fullTitle = title
+	? `${title} | ${site.name}`
+	: `${site.name}: learn to build your startup by cloning one`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>TODO</title>
-        <script is:inline>
-            const getThemePreference = () => {
-                if (
-                    typeof localStorage !== "undefined" &&
-                    localStorage.getItem("theme")
-                ) {
-                    return localStorage.getItem("theme");
-                }
-                return window.matchMedia("(prefers-color-scheme: dark)").matches
-                    ? "dark"
-                    : "light";
-            };
-            const isDark = getThemePreference() === "dark";
-            document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{fullTitle}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title={`${site.name} blog`}
+			href="/rss.xml"
+		/>
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0f1417" media="(prefers-color-scheme: dark)" />
+		<Font cssVariable="--font-bricolage" preload />
+		<Font cssVariable="--font-geist" preload />
+		<Font cssVariable="--font-geist-mono" />
+		<slot name="head" />
+		<script is:inline>
+			const getThemePreference = () => {
+				if (
+					typeof localStorage !== "undefined" &&
+					localStorage.getItem("theme")
+				) {
+					return localStorage.getItem("theme");
+				}
+				return window.matchMedia("(prefers-color-scheme: dark)").matches
+					? "dark"
+					: "light";
+			};
+			const isDark = getThemePreference() === "dark";
+			document.documentElement.classList[isDark ? "add" : "remove"]("dark");
 
-            if (typeof localStorage !== "undefined") {
-                const observer = new MutationObserver(() => {
-                    const isDark = document.documentElement.classList.contains("dark");
-                    localStorage.setItem("theme", isDark ? "dark" : "light");
-                });
-                observer.observe(document.documentElement, {
-                    attributes: true,
-                    attributeFilter: ["class"],
-                });
-            }
-        </script>
-    </head>
-    <body class="flex flex-col min-h-svh">
-        <slot />
-    </body>
+			if (typeof localStorage !== "undefined") {
+				const observer = new MutationObserver(() => {
+					const isDark = document.documentElement.classList.contains("dark");
+					localStorage.setItem("theme", isDark ? "dark" : "light");
+				});
+				observer.observe(document.documentElement, {
+					attributes: true,
+					attributeFilter: ["class"],
+				});
+			}
+		</script>
+	</head>
+	<body class="flex min-h-svh flex-col">
+		<a
+			href="#main"
+			class="sr-only z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+			>Skip to content</a
+		>
+		<SiteHeader />
+		<main id="main" class="flex grow flex-col">
+			<slot />
+		</main>
+		<SiteFooter />
+	</body>
 </html>
